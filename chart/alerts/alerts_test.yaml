@@ -1,0 +1,30 @@
+rule_files:
+  - alerts_rules.yaml
+evaluation_interval: 1m
+tests:
+
+  - interval: 1m
+    input_series:
+      - series: 'locust_operator_job_object_state{name="test", job_name="test_job", status="failed"}'
+        values: '1'
+
+    promql_expr_test:
+      - expr: locust_operator_job_object_state{status="failed"}
+        eval_time: 2m # The time elapsed from time=0s when the expression has to be evaluated
+        exp_samples:
+          - labels: 'locust_operator_job_object_state{name="test", job_name="test_job", status="failed"}'
+            value: 1
+
+    alert_rule_test:
+        - eval_time: 2m # The time elapsed from time=0s when the alerts have to be checked.
+          alertname: LocustOperatorJobFailed
+          exp_alerts:
+              - exp_labels:
+                    alertname: LocustOperatorJobFailed
+                    name: test
+                    job_name: test_job
+                    severity: critical
+                    status: failed
+                exp_annotations:
+                  description: "Job test_job has failed."
+                  summary: "Locust object test has a failed job."

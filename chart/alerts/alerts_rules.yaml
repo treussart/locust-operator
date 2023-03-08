@@ -1,0 +1,11 @@
+groups:
+  - name: locust-operator-alerts
+    rules:
+      - alert: LocustOperatorJobFailed
+        expr: locust_operator_job_object_state{status="failed"}
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Locust object {{ $labels.name }} has a {{ $labels.status }} job.
+          description: Job {{ $labels.job_name }} has {{ $labels.status }}.

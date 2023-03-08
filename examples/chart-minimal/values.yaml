@@ -1,0 +1,6 @@
+locust:
+  configPath: "/home/locust"
+  fileName: "example.py"
+schedule: ""
+runTime: "2m"
+workers: 2

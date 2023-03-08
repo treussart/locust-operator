@@ -1,0 +1,12 @@
+apiVersion: locust-qa.xyz/v1
+kind: Locust
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  workers: {{ .Values.workers }}
+  schedule: {{ .Values.schedule | quote }}
+  configMapRef: {{ .Release.Name }}
+  mountExternalConfig:
+    mountPath: {{ .Values.locust.configPath }}
+    name: {{ .Release.Name }}-files
+  runTime: {{ .Values.runTime }}

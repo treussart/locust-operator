@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-files
+data:
+  {{ .Values.locust.fileName }}: |-
+{{ .Files.Get "data/example.py"  | indent 4 }}

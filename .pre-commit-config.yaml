@@ -1,0 +1,20 @@
+default_language_version:
+  python: python3.10.3
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+  - repo: local
+    hooks:
+      - id: shfmt
+        name: shfmt
+        minimum_pre_commit_version: 2.4.0
+        language: python
+        entry: shfmt
+        args: [ -w ]
+        types: [ shell ]

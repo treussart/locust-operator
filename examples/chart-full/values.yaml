@@ -1,0 +1,10 @@
+locust:
+  configPath: "/home/locust"
+  fileName: "example.py"
+schedule: ""
+runTime: "2m"
+workers: 2
+image: "locustio/locust:2.8.5"
+dockerconfigjson: '{"auths":{"https://fake.io/":{"auth":"ZmFrZTpmYWtl"}}}'
+command: "locust"
+secret: "secret-value"

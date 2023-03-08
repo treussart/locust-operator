@@ -1,0 +1,19 @@
+apiVersion: locust-qa.xyz/v1
+kind: Locust
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  workers: {{ .Values.workers }}
+  schedule: {{ .Values.schedule | quote }}
+  image: {{ .Values.locust.image }}
+  imagePullSecret: {{ .Release.Name }}-registry
+  command: {{ .Values.locust.command }}
+  secretRef: {{ .Release.Name }}-secret
+  configMapRef: {{ .Release.Name }}-config
+  mountExternalSecret:
+    mountPath: "/jwt-keys"
+    name: {{ .Release.Name }}-secret-files
+  mountExternalConfig:
+    mountPath: {{ .Values.locust.configPath }}
+    name: {{ .Release.Name }}-config-files
+  runTime: {{ .Values.runTime }}

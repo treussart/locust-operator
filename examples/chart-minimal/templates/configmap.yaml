@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+data:
+  LOCUST_LOCUSTFILE: {{ .Values.locust.configPath }}/{{ .Values.locust.fileName }}
+  LOCUST_HOST: "http://0.category.locust-qa.xyz/"
+  LOCUST_USERS: "2"
+  LOCUST_SPAWN_RATE: "1"
+  LOCUST_HEADLESS: "true"
+  LOCUST_ONLY_SUMMARY: "true"
+  LOCUST_STOP_TIMEOUT: "99"

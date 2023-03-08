@@ -1,0 +1,81 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: locusts.locust-qa.xyz
+spec:
+  group: locust-qa.xyz
+  names:
+    plural: locusts
+    singular: locust
+    kind: Locust
+    listKind: LocustList
+    shortNames:
+      - lct
+      - lcts
+  scope: Namespaced
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          description: Locust is the Schema for the locusts API
+          properties:
+            apiVersion:
+              description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+              type: string
+            kind:
+              description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: LocustSpec defines the desired state of Locust
+              properties:
+                workers:
+                  format: int32
+                  type: integer
+                schedule:
+                  type: string
+                image:
+                  type: string
+                imagePullSecret:
+                  type: string
+                command:
+                  type: string
+                secretRef:
+                  type: string
+                configMapRef:
+                  type: string
+                mountExternalSecret:
+                  properties:
+                    mountPath:
+                      type: string
+                    name:
+                      type: string
+                  type: object
+                mountExternalConfig:
+                  properties:
+                    mountPath:
+                      type: string
+                    name:
+                      type: string
+                  type: object
+                runTime:
+                  type: string
+              type: object
+          type: object
+      additionalPrinterColumns:
+        - name: workers
+          type: integer
+          jsonPath: .spec.workers
+        - name: schedule
+          type: string
+          jsonPath: .spec.schedule
+        - name: runTime
+          type: string
+          jsonPath: .spec.runTime
